@@ -34,4 +34,27 @@ var choices = {
     q9 : ["Hang on Sloopy", "Come on Let's Go", "Beat the Clock", "I Got to Go Back"],
 }
 
+var questionChosen= " ";
+var answer=" ";
+var questionsAsked = [];
+var remainingQuestions = [];
+
+// Determines a random question
+questionChosen = questions[Math.floor(Math.random()*questions.length)]
+console.log(questionChosen);
+
+// Push chosen question to a Questions Asked array to avoid repeats
+questionsAsked.push(questionChosen);
+console.log(questionsAsked);
+
+setInterval(show, 10000);
+
+function show (){
+    $(".question").html(questionChosen);
+    $(".choices")
+}
+
+
+// Create a reset function
+// Create a win/loss function
 
