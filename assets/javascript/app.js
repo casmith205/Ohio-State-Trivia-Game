@@ -26,12 +26,12 @@ var choices = {
     q1 : ["Buckeye City", "Block-O", "The Brutus House", "The Angry Tree Nuts"],
     q2 : ["Buckeye", "Boxelder Maple", "Alder", "Blackhaw"],
     q3 : ["Betty Buckeye", "Bruce Buckeye", "Brutus Buckeye", "Bill Buckeye"],
-    q4 : ["Woody Hayes"],
-    q5 : ["Archie Griffin"],
-    q6 : ["The Best Damn Band in the Land"],
-    q7 : ["Bob Hope"],
-    q8 : ["I-O!"],
-    q9 : ["Hang on Sloopy"],
+    q4 : ["Urban Meyer","Woody Hayes","Jim Tressel", "Earle Bruce"],
+    q5 : ["Archie Griffin", "Eddie George", "Troy Smith", "Braxton Miller"],
+    q6 : ["The Baddest Damn Band in the Land","The Best Darn Bassists in the Land", "The Ballin-est Drummers Band in this Land","The Best Damn Band in the Land"],
+    q7 : ["Dave Chappelle","Bob Hope", "Josh Radnor","Drew Carey"],
+    q8 : ["Shut up!", "Go Bucks!", "I-O!", "Ohio! Ohio! The land that I love"],
+    q9 : ["Hang on Sloopy", "Come on Let's Go", "Beat the Clock", "I Got to Go Back"],
 }
 
 
