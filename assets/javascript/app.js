@@ -39,6 +39,7 @@ var answer=" ";
 var questionsAsked = [];
 var remainingQuestions = [];
 var indexChosen;
+var timeRemaining = 16;
 
 // Determines a random question
 indexChosen = Math.floor(Math.random()*questions.length);
@@ -50,15 +51,19 @@ choiceIndex = ("q"+ indexChosen);
 questionsAsked.push(question);
 console.log(questionsAsked);
 
-setInterval(timeRemaining, 1000);
+setInterval(time, 1000);
 setInterval(show, 10000);
 
+function time(){
+    timeRemaining--;
+    $(".time").html(timeRemaining + " seconds remaining!");
+};
+
 function show (){
-    $(".time").html("10 seconds remaining!");
+    timeRemaining = 15;
+    $(".time").html(timeRemaining + " seconds remaining!");
     $(".question").html(question);
-    for(i=0; i<4; i++){
-        $("#q0").html(choices[choiceIndex][0]);
-    }
+    $("#q0").html(choices[choiceIndex][0]);
     $("#q1").html(choices[choiceIndex][1]);
     $("#q2").html(choices[choiceIndex][2]);
     $("#q3").html(choices[choiceIndex][3]);
