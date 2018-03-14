@@ -73,7 +73,16 @@ function show (){
     choiceIndex = ("q"+ indexChosen);
 }
 
+function reset (){
+
+};
+
+function start (){
+
+};
+
 
 // Create a reset function
 // Create a win/loss function
+// Make sure questions cant repeat
 
