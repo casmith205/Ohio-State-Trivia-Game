@@ -23,35 +23,49 @@ var answers = [
 ]
 
 var choices = {
-    q1 : ["Buckeye City", "Block-O", "The Brutus House", "The Angry Tree Nuts"],
-    q2 : ["Buckeye", "Boxelder Maple", "Alder", "Blackhaw"],
-    q3 : ["Betty Buckeye", "Bruce Buckeye", "Brutus Buckeye", "Bill Buckeye"],
-    q4 : ["Urban Meyer","Woody Hayes","Jim Tressel", "Earle Bruce"],
-    q5 : ["Archie Griffin", "Eddie George", "Troy Smith", "Braxton Miller"],
-    q6 : ["The Baddest Damn Band in the Land","The Best Darn Bassists in the Land", "The Ballin-est Drummers Band in this Land","The Best Damn Band in the Land"],
-    q7 : ["Dave Chappelle","Bob Hope", "Josh Radnor","Drew Carey"],
-    q8 : ["Shut up!", "Go Bucks!", "I-O!", "Ohio! Ohio! The land that I love"],
-    q9 : ["Hang on Sloopy", "Come on Let's Go", "Beat the Clock", "I Got to Go Back"],
+    q0 : ["Buckeye City", "Block-O", "The Brutus House", "The Angry Tree Nuts"],
+    q1 : ["Buckeye", "Boxelder Maple", "Alder", "Blackhaw"],
+    q2 : ["Betty Buckeye", "Bruce Buckeye", "Brutus Buckeye", "Bill Buckeye"],
+    q3 : ["Urban Meyer","Woody Hayes","Jim Tressel", "Earle Bruce"],
+    q4 : ["Archie Griffin", "Eddie George", "Troy Smith", "Braxton Miller"],
+    q5 : ["The Baddest Damn Band in the Land","The Best Darn Bassists in the Land", "The Ballin-est Drummers Band in this Land","The Best Damn Band in the Land"],
+    q6 : ["Dave Chappelle","Bob Hope", "Josh Radnor","Drew Carey"],
+    q7 : ["Shut up!", "Go Bucks!", "I-O!", "Ohio! Ohio! The land that I love"],
+    q8 : ["Hang on Sloopy", "Come on Let's Go", "Beat the Clock", "I Got to Go Back"]
 }
 
-var questionChosen= " ";
+var question= " ";
 var answer=" ";
 var questionsAsked = [];
 var remainingQuestions = [];
+var indexChosen;
 
 // Determines a random question
-questionChosen = questions[Math.floor(Math.random()*questions.length)]
-console.log(questionChosen);
+indexChosen = Math.floor(Math.random()*questions.length);
+question = questions[indexChosen];
+choiceIndex = ("q"+ indexChosen);
+
 
 // Push chosen question to a Questions Asked array to avoid repeats
-questionsAsked.push(questionChosen);
+questionsAsked.push(question);
 console.log(questionsAsked);
 
+setInterval(timeRemaining, 1000);
 setInterval(show, 10000);
 
 function show (){
-    $(".question").html(questionChosen);
-    $(".choices")
+    $(".time").html("10 seconds remaining!");
+    $(".question").html(question);
+    for(i=0; i<4; i++){
+        $("#q0").html(choices[choiceIndex][0]);
+    }
+    $("#q1").html(choices[choiceIndex][1]);
+    $("#q2").html(choices[choiceIndex][2]);
+    $("#q3").html(choices[choiceIndex][3]);
+    indexChosen = Math.floor(Math.random()*questions.length);
+    question = questions[indexChosen];
+    questionsAsked.push(question);
+    choiceIndex = ("q"+ indexChosen);
 }
 
 
