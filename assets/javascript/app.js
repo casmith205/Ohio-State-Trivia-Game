@@ -44,53 +44,53 @@ var remainingQuestions = [];
 var indexChosen;
 var timeRemaining = 16;
 
-// Determines a random question
-indexChosen = Math.floor(Math.random()*questions.length);
-question = questions[indexChosen];
-choiceIndex = ("q"+ indexChosen);
-
-
-// Push chosen question to a Questions Asked array to avoid repeats
-questionsAsked.push(question);
-console.log(questionsAsked);
-
 reset();
 
 $("#startBtn").on("click", function(){
     start();
-    setInterval(time, 1000);
-    setInterval(show, 10000);
+    show();
+
 });
 
+// Function reduces time remaining and prints the seconds remaining to HTML
 function time(){
-    timeRemaining--;
-    $(".time").html(timeRemaining + " seconds remaining!");
+    if(timeRemaining>0){
+        timeRemaining--;
+        $(".time").html(timeRemaining + " seconds remaining!");
+    } else {
+        show();
+    }
 };
 
+// Function shows the question and related choices
 function show (){
+    // Set time remaining to 15 and push to time div
     timeRemaining = 15;
     $(".time").html(timeRemaining + " seconds remaining!");
+    // Generate a random number between 0 and 8; Pull the question at the random number position and related choice array. Push to html
+    indexChosen = Math.floor(Math.random()*questions.length);
+    question = questions[indexChosen];
+    questionsAsked.push(question);
+    choiceIndex = ("q"+ indexChosen);
     $(".question").html(question);
     $("#q0").html(choices[choiceIndex][0]);
     $("#q1").html(choices[choiceIndex][1]);
     $("#q2").html(choices[choiceIndex][2]);
     $("#q3").html(choices[choiceIndex][3]);
-    indexChosen = Math.floor(Math.random()*questions.length);
-    question = questions[indexChosen];
-    questionsAsked.push(question);
-    choiceIndex = ("q"+ indexChosen);
 }
 
+// Funtion resets the game
 function reset (){
-    $(".choices").fadeOut();
+    $(".choices").fadeOut(10);
     $("#startBtn").fadeIn();
 };
 
+// Function starts the game
 function start (){
     $("#startBtn").fadeOut();
     $(".choices").fadeIn();
-
-
+    // Every second, run the time function
+    setInterval(time, 1000);
 };
 
 
