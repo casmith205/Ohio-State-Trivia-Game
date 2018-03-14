@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-
+// DEFINING VARIABLES
 var questions = [
     "What is the name of the OSU student section?",
     "What is the state tree of Ohio?",
@@ -40,49 +40,20 @@ var choices = {
 var question= " ";
 var answer=" ";
 var questionsAsked = [];
-var remainingQuestions = [];
 var indexChosen;
 var timeRemaining = 16;
+var correctAnswers = 0;
+var incorrectAnswers = 0;
+var unanswered = 0;
 
-reset();
-
-$("#startBtn").on("click", function(){
-    start();
-    show();
-
-});
-
-// Function reduces time remaining and prints the seconds remaining to HTML
-function time(){
-    if(timeRemaining>0){
-        timeRemaining--;
-        $(".time").html(timeRemaining + " seconds remaining!");
-    } else {
-        show();
-    }
-};
-
-// Function shows the question and related choices
-function show (){
-    // Set time remaining to 15 and push to time div
-    timeRemaining = 15;
-    $(".time").html(timeRemaining + " seconds remaining!");
-    // Generate a random number between 0 and 8; Pull the question at the random number position and related choice array. Push to html
-    indexChosen = Math.floor(Math.random()*questions.length);
-    question = questions[indexChosen];
-    questionsAsked.push(question);
-    choiceIndex = ("q"+ indexChosen);
-    $(".question").html(question);
-    $("#q0").html(choices[choiceIndex][0]);
-    $("#q1").html(choices[choiceIndex][1]);
-    $("#q2").html(choices[choiceIndex][2]);
-    $("#q3").html(choices[choiceIndex][3]);
-}
-
+// DEFINING FUNCTIONS
 // Funtion resets the game
 function reset (){
     $(".choices").fadeOut(10);
     $("#startBtn").fadeIn();
+    correctAnswers = 0;
+    incorrectAnswers = 0;
+    unanswered = 0;
 };
 
 // Function starts the game
@@ -93,9 +64,79 @@ function start (){
     setInterval(time, 1000);
 };
 
+// Function reduces time remaining and prints the seconds remaining to HTML
+function time(){
+    if(timeRemaining>0){
+        timeRemaining--;
+        unanswered++;
+        $(".time").html(timeRemaining + " seconds remaining!");
+    } else {
+        show();
+    }
+};
 
-// Create a reset function
-// Create a win/loss function
-// Make sure questions cant repeat
+// Function shows the question and related choices
+function show (){
+    if(questionsAsked.length <= questions.length){
+        // Set time remaining to 15 and push to time div
+        timeRemaining = 15;
+        $(".time").html(timeRemaining + " seconds remaining!");
+        // Generate a random number between 0 and 8; Pull the question at the random number position and related choice array. Push to html
+        indexChosen = Math.floor(Math.random()*questions.length);
+        question = questions[indexChosen];
+        // If the question has not already been asked, then put it into the asked array and push to HTML
+        if(questionsAsked.indexOf(question) == -1){
+            questionsAsked.push(question);
+            answer = answers[indexChosen];
+            console.log(answer);
+            choiceIndex = ("q"+ indexChosen);
+            $(".question").html(question);
+            $("#option0").html(choices[choiceIndex][0]);
+            $("#option1").html(choices[choiceIndex][1]);
+            $("#option2").html(choices[choiceIndex][2]);
+            $("#option3").html(choices[choiceIndex][3]);
+        } else {
+            show();
+        }
+    } else {
+        showResults();
+    }
+};
+
+function answerShow (){
+
+};
+
+function showResults(){
+    $(".gameplay").fadeOut();
+
+};
+
+// ON-PAGE ACTIONS
+// reset the page to start
+reset();
+
+// When the start button is clicked...
+$("#startBtn").on("click", function(){
+    start();
+    show();
+
+});
+
+// When the choices are clicked...
+$(".choices").on("click", function(x){
+        console.log(x);
+        console.log(x.currentTarget.innerText);
+        if(x.currentTarget.innerHTML==answer){
+            correctAnswers++;
+            console.log(correctAnswers);
+            answerShow();
+        } else{
+            incorrectAnswers++;
+            console.log(incorrectAnswers);
+            answerShow();
+        };
+});
+
 
 });
