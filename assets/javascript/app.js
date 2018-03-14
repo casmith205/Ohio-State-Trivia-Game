@@ -1,3 +1,6 @@
+$(document).ready(function() {
+
+
 var questions = [
     "What is the name of the OSU student section?",
     "What is the state tree of Ohio?",
@@ -51,8 +54,13 @@ choiceIndex = ("q"+ indexChosen);
 questionsAsked.push(question);
 console.log(questionsAsked);
 
-setInterval(time, 1000);
-setInterval(show, 10000);
+reset();
+
+$("#startBtn").on("click", function(){
+    start();
+    setInterval(time, 1000);
+    setInterval(show, 10000);
+});
 
 function time(){
     timeRemaining--;
@@ -74,10 +82,14 @@ function show (){
 }
 
 function reset (){
-
+    $(".choices").fadeOut();
+    $("#startBtn").fadeIn();
 };
 
 function start (){
+    $("#startBtn").fadeOut();
+    $(".choices").fadeIn();
+
 
 };
 
@@ -86,3 +98,4 @@ function start (){
 // Create a win/loss function
 // Make sure questions cant repeat
 
+});
