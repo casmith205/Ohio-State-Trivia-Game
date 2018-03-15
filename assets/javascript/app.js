@@ -15,7 +15,7 @@ var questions = [
 
 var answers = [
     "Block-O",
-    "Buckeye Tree",
+    "Buckeye",
     "Brutus Buckeye",
     "Woody Hayes",
     "Archie Griffin",
@@ -28,7 +28,7 @@ var answers = [
 var choices = {
     q0 : ["Buckeye City", "Block-O", "The Brutus House", "The Angry Tree Nuts"],
     q1 : ["Buckeye", "Boxelder Maple", "Alder", "Blackhaw"],
-    q2 : ["Betty Buckeye", "Bruce Buckeye", "Brutus Buckeye", "Bill Buckeye"],
+    q2 : ["Betty Buckeye", "Bruce Buckeye", "Bill Buckeye", "Brutus Buckeye"],
     q3 : ["Urban Meyer","Woody Hayes","Jim Tressel", "Earle Bruce"],
     q4 : ["Archie Griffin", "Eddie George", "Troy Smith", "Braxton Miller"],
     q5 : ["The Baddest Damn Band in the Land","The Best Darn Bassists in the Land", "The Ballin-est Drummers Band in this Land","The Best Damn Band in the Land"],
@@ -37,14 +37,19 @@ var choices = {
     q8 : ["Hang on Sloopy", "Come on Let's Go", "Beat the Clock", "I Got to Go Back"]
 }
 
+var correctReactionImgs = ["assets/images/dance.gif","assets/images/thankyourfans.gif"];
+var incorrectReactionImgs = ["assets/images/sadpizza.gif"];
+
 var question= " ";
 var answer=" ";
 var questionsAsked = [];
 var indexChosen;
 var timeRemaining = 16;
+var correct;
 var correctAnswers = 0;
 var incorrectAnswers = 0;
-var unanswered = 0;
+var unanswered = 9 - (correctAnswers+incorrectAnswers);
+var timeInt;
 
 // DEFINING FUNCTIONS
 // Funtion resets the game
@@ -53,7 +58,6 @@ function reset (){
     $("#startBtn").fadeIn();
     correctAnswers = 0;
     incorrectAnswers = 0;
-    unanswered = 0;
 };
 
 // Function starts the game
@@ -61,35 +65,36 @@ function start (){
     $("#startBtn").fadeOut();
     $(".choices").fadeIn();
     // Every second, run the time function
-    setInterval(time, 1000);
+    timeInt = setInterval(time, 1000);
 };
 
 // Function reduces time remaining and prints the seconds remaining to HTML
 function time(){
     if(timeRemaining>0){
         timeRemaining--;
-        unanswered++;
-        $(".time").html(timeRemaining + " seconds remaining!");
-    } else {
+    } else if(questionsAsked.length<questions.length){
         show();
+    } else {
+        showResults();
     }
 };
 
 // Function shows the question and related choices
 function show (){
-    if(questionsAsked.length <= questions.length){
+    $(".time").html(timeRemaining + " seconds remaining!");
+    $(".gameplay").fadeIn();
+    $(".results").fadeOut(0);
         // Set time remaining to 15 and push to time div
         timeRemaining = 15;
         $(".time").html(timeRemaining + " seconds remaining!");
         // Generate a random number between 0 and 8; Pull the question at the random number position and related choice array. Push to html
         indexChosen = Math.floor(Math.random()*questions.length);
         question = questions[indexChosen];
+        answer = answers[indexChosen];
+        choiceIndex = ("q"+ indexChosen);
         // If the question has not already been asked, then put it into the asked array and push to HTML
         if(questionsAsked.indexOf(question) == -1){
             questionsAsked.push(question);
-            answer = answers[indexChosen];
-            console.log(answer);
-            choiceIndex = ("q"+ indexChosen);
             $(".question").html(question);
             $("#option0").html(choices[choiceIndex][0]);
             $("#option1").html(choices[choiceIndex][1]);
@@ -98,18 +103,24 @@ function show (){
         } else {
             show();
         }
+    };
+
+function answerShow (){
+    $(".gameplay").fadeOut(0);
+    $(".results").fadeIn();
+    if(correct == true){
+        $(".results").html("That is correct! <br>");   
     } else {
-        showResults();
+        $(".results").html("Sorry, but that is not correct! <br> Are you sure you aren't a fake fan?");
     }
 };
 
-function answerShow (){
-
-};
-
 function showResults(){
-    $(".gameplay").fadeOut();
-
+    $(".results").html("Congrats! You're all done. <br> Here are your stats... <br> Correct answers: " + correctAnswers 
+    + "<br> Incorrect Answers: "+ incorrectAnswers + "<br> Unanswered Questions: " + unanswered + "<br> Not too shabby!");
+    $(".gameplay").fadeOut(0);
+    $(".results").fadeIn();
+    clearInterval(timeInt);
 };
 
 // ON-PAGE ACTIONS
@@ -120,22 +131,26 @@ reset();
 $("#startBtn").on("click", function(){
     start();
     show();
-
 });
 
 // When the choices are clicked...
-$(".choices").on("click", function(x){
-        console.log(x);
+$(".allChoices").on("click", ".choices", function(x){
+        timeRemaining=3;
+        $(".time").html(" ");
         console.log(x.currentTarget.innerText);
-        if(x.currentTarget.innerHTML==answer){
+        if(x.currentTarget.innerText === answer){
             correctAnswers++;
+            correct = true;
             console.log(correctAnswers);
             answerShow();
-        } else{
+        } else {
             incorrectAnswers++;
+            correct = false;
             console.log(incorrectAnswers);
             answerShow();
         };
+        console.log(correct);
+       
 });
 
 
