@@ -37,6 +37,10 @@ var choices = {
     q8 : ["Hang on Sloopy", "Come on Let's Go", "Beat the Clock", "I Got to Go Back"]
 }
 
+var correctAnswerMessages=["That is correct!", "Woo! You got it!", "Nice guess ;)", "Woah, look out, we have a real buckeye on our hands!","Hey, are you googling these?","Yep! Nailed it.","Yaaaas, you got it!","How's it feel to be so smart?", "Good job! You got it right!"];
+var correctAnswerMessage;
+var incorrectAnswerMessages=["Nope :(", "Yikes, so close", "It's okay, you'll get the next one!", "Are you from M!ch!g@n...?", "What, do you hate football or something?","C'mon! That one was easy.","Almost! but not quite...", "You need some coffe? water? Focus kid!", "Hey don't sweat it, this was a tough one!"];
+var incorrectAnswerMessage;
 var correctReactionImgs = ["assets/images/dance.gif","assets/images/thankyourfans.gif"];
 var incorrectReactionImgs = ["assets/images/sadpizza.gif"];
 
@@ -110,25 +114,32 @@ function show (){
         }
     };
 
+
 function answerShow (){
     $(".gameplay").fadeOut(0);
     $(".results").fadeIn();
+    correctAnswerMessage = correctAnswerMessages[Math.floor(Math.random()*correctAnswerMessages.length)];
+    incorrectAnswerMessage = incorrectAnswerMessages[Math.floor(Math.random()*incorrectAnswerMessages.length)];
     if(correct == true){
-        $(".results").html("That is correct! <br>");   
+        $(".results").html(correctAnswerMessage + "<br>");   
     } else {
-        $(".results").html("Sorry, but that is not correct! <br> Are you sure you aren't a fake fan?");
+        $(".results").html(incorrectAnswerMessage + "<br>");
     };
     $("#nextBtn").fadeIn()
 };
 
 function showResults(){
+    // Push results text to the HTML
     $(".results").html("Congrats! You're all done. <br> Here are your stats... <br> Correct answers: " + correctAnswers 
     + "<br> Incorrect Answers: "+ incorrectAnswers + "<br> Unanswered Questions: " + unanswered + "<br> Not too shabby!");
+    // Fade out the gameplay and time divs, as well as the next button
     $(".gameplay").fadeOut(0);
-    $("#nextBtn").fadeOut(0);
     $(".time").fadeOut();
+    $("#nextBtn").fadeOut(0);
+    // Fade in the results to show result text as well as reset button
     $(".results").fadeIn();
     $("#resetBtn").fadeIn();
+    $("#gameover").fadeIn();
     $(".time").html(" ");
     clearInterval(timeInt);
 };
@@ -142,7 +153,7 @@ $("#startBtn").on("click", function(){
     show();
 });
 
-
+// Adding hover colors to pick an answer
 $(".choices").hover(function(){
     $(this).css("background-color", "#666666");
     },function(){
@@ -166,6 +177,7 @@ $(".allChoices").on("click", ".choices", function(x){
         
 });
 
+// When the "next question" button is clicked
 $("#nextBtn").on("click", function(){
     if(questionsAsked.length < questions.length) {
         show();
@@ -175,6 +187,7 @@ $("#nextBtn").on("click", function(){
     $("#nextBtn").fadeOut();
 });
 
+// When the reset button is clicked...
 $("#resetBtn").on("click", function(){
     reset();
 });
