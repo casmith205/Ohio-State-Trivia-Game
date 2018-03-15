@@ -48,16 +48,19 @@ var timeRemaining = 15;
 var correct;
 var correctAnswers = 0;
 var incorrectAnswers = 0;
-var unanswered = 9 - (correctAnswers+incorrectAnswers);
+var unanswered = 9;
 var timeInt;
 
 // DEFINING FUNCTIONS
 // Funtion resets the game
 function reset (){
-    $(".choices").fadeOut(10);
+    $(".results").fadeOut(0);
     $("#startBtn").fadeIn();
+    $("#resetBtn").css("display", "none");
     correctAnswers = 0;
     incorrectAnswers = 0;
+    unanswered = 9;
+    questionsAsked =[];
 };
 
 // Function starts the game
@@ -114,21 +117,23 @@ function answerShow (){
         $(".results").html("That is correct! <br>");   
     } else {
         $(".results").html("Sorry, but that is not correct! <br> Are you sure you aren't a fake fan?");
-    }
+    };
+    $("#nextBtn").fadeIn()
 };
 
 function showResults(){
     $(".results").html("Congrats! You're all done. <br> Here are your stats... <br> Correct answers: " + correctAnswers 
     + "<br> Incorrect Answers: "+ incorrectAnswers + "<br> Unanswered Questions: " + unanswered + "<br> Not too shabby!");
     $(".gameplay").fadeOut(0);
+    $("#nextBtn").fadeOut(0)
     $(".results").fadeIn();
+    $("#resetBtn").fadeIn();
     $(".time").html(" ");
     clearInterval(timeInt);
 };
 
 // ON-PAGE ACTIONS
 // reset the page to start
-reset();
 
 // When the start button is clicked...
 $("#startBtn").on("click", function(){
@@ -138,21 +143,31 @@ $("#startBtn").on("click", function(){
 
 // When the choices are clicked...
 $(".allChoices").on("click", ".choices", function(x){
-        timeRemaining=3;
-        console.log(answer);
-        console.log(x.currentTarget.innerText);
-        console.log(answer == x.currentTarget)
-        if(x.currentTarget.innerText === answer){
+        if(x.target.innerHTML === answer){
             correctAnswers++;
+            unanswered--;
             correct = true;
             answerShow();
         } else {
             incorrectAnswers++;
+            unanswered--;
             correct = false;
             answerShow();
         };
-        console.log(correct); 
+        
 });
 
+$("#nextBtn").on("click", function(){
+    if(questionsAsked.length < questions.length) {
+        show();
+        $("#nextBtn").fadeOut();
+    } else {
+        return;
+    }
+});
+
+$("#resetBtn").on("click", function(){
+    reset();
+});
 
 });
