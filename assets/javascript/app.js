@@ -44,7 +44,7 @@ var question= " ";
 var answer=" ";
 var questionsAsked = [];
 var indexChosen;
-var timeRemaining = 16;
+var timeRemaining = 15;
 var correct;
 var correctAnswers = 0;
 var incorrectAnswers = 0;
@@ -70,10 +70,13 @@ function start (){
 
 // Function reduces time remaining and prints the seconds remaining to HTML
 function time(){
-    if(timeRemaining>0){
-        timeRemaining--;
-    } else if(questionsAsked.length<questions.length){
-        show();
+    if(questionsAsked.length< questions.length){
+        if(timeRemaining>0){
+            timeRemaining--;
+        } else {
+            show();
+        }
+        $(".time").html(timeRemaining + " seconds remaining!"); 
     } else {
         showResults();
     }
@@ -86,7 +89,6 @@ function show (){
     $(".results").fadeOut(0);
         // Set time remaining to 15 and push to time div
         timeRemaining = 15;
-        $(".time").html(timeRemaining + " seconds remaining!");
         // Generate a random number between 0 and 8; Pull the question at the random number position and related choice array. Push to html
         indexChosen = Math.floor(Math.random()*questions.length);
         question = questions[indexChosen];
@@ -120,6 +122,7 @@ function showResults(){
     + "<br> Incorrect Answers: "+ incorrectAnswers + "<br> Unanswered Questions: " + unanswered + "<br> Not too shabby!");
     $(".gameplay").fadeOut(0);
     $(".results").fadeIn();
+    $(".time").html(" ");
     clearInterval(timeInt);
 };
 
@@ -136,21 +139,19 @@ $("#startBtn").on("click", function(){
 // When the choices are clicked...
 $(".allChoices").on("click", ".choices", function(x){
         timeRemaining=3;
-        $(".time").html(" ");
+        console.log(answer);
         console.log(x.currentTarget.innerText);
+        console.log(answer == x.currentTarget)
         if(x.currentTarget.innerText === answer){
             correctAnswers++;
             correct = true;
-            console.log(correctAnswers);
             answerShow();
         } else {
             incorrectAnswers++;
             correct = false;
-            console.log(incorrectAnswers);
             answerShow();
         };
-        console.log(correct);
-       
+        console.log(correct); 
 });
 
 
