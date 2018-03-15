@@ -67,6 +67,7 @@ function reset (){
 function start (){
     $("#startBtn").fadeOut();
     $(".choices").fadeIn();
+    $(".time").fadeIn();
     // Every second, run the time function
     timeInt = setInterval(time, 1000);
 };
@@ -79,15 +80,13 @@ function time(){
         } else {
             show();
         }
-        $(".time").html(timeRemaining + " seconds remaining!"); 
-    } else {
-        showResults();
+        $(".time").html("<b>"+timeRemaining + " seconds remaining! </b>"); 
     }
 };
 
 // Function shows the question and related choices
 function show (){
-    $(".time").html(timeRemaining + " seconds remaining!");
+    $(".time").html("<b>"+timeRemaining + " seconds remaining! </b>"); 
     $(".gameplay").fadeIn();
     $(".results").fadeOut(0);
         // Set time remaining to 15 and push to time div
@@ -100,11 +99,12 @@ function show (){
         // If the question has not already been asked, then put it into the asked array and push to HTML
         if(questionsAsked.indexOf(question) == -1){
             questionsAsked.push(question);
-            $(".question").html(question);
+            $(".question").html("<b>"+question+"</b>");
             $("#option0").html(choices[choiceIndex][0]);
             $("#option1").html(choices[choiceIndex][1]);
             $("#option2").html(choices[choiceIndex][2]);
             $("#option3").html(choices[choiceIndex][3]);
+
         } else {
             show();
         }
@@ -125,7 +125,8 @@ function showResults(){
     $(".results").html("Congrats! You're all done. <br> Here are your stats... <br> Correct answers: " + correctAnswers 
     + "<br> Incorrect Answers: "+ incorrectAnswers + "<br> Unanswered Questions: " + unanswered + "<br> Not too shabby!");
     $(".gameplay").fadeOut(0);
-    $("#nextBtn").fadeOut(0)
+    $("#nextBtn").fadeOut(0);
+    $(".time").fadeOut();
     $(".results").fadeIn();
     $("#resetBtn").fadeIn();
     $(".time").html(" ");
@@ -140,6 +141,14 @@ $("#startBtn").on("click", function(){
     start();
     show();
 });
+
+
+$(".choices").hover(function(){
+    $(this).css("background-color", "#666666");
+    },function(){
+    $(this).css("background-color", "#F5F5F5");
+    }
+);
 
 // When the choices are clicked...
 $(".allChoices").on("click", ".choices", function(x){
@@ -160,14 +169,15 @@ $(".allChoices").on("click", ".choices", function(x){
 $("#nextBtn").on("click", function(){
     if(questionsAsked.length < questions.length) {
         show();
-        $("#nextBtn").fadeOut();
     } else {
-        return;
-    }
+        showResults();
+    };
+    $("#nextBtn").fadeOut();
 });
 
 $("#resetBtn").on("click", function(){
     reset();
 });
+
 
 });

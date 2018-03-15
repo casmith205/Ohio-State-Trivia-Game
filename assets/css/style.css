@@ -1,7 +1,56 @@
 #nextBtn{
     display: none;
+    margin: 0px 200px 0px 200px;
+    background-color: #666666;
 }
 
 #resetBtn{
     display:none;
+    margin: 0px 200px 0px 200px;
+    background-color: #666666;
+}
+
+body{
+    background: #F5F5F5 url(../images/stadium1.jpg) no-repeat;
+    background-size: 100%;
+    padding: 20px;
+    text-align: center;
+}
+
+#startBtn{
+    margin: 0px 200px 0px 200px;
+    background-color: #bb0000;
+}
+
+.time{
+    margin: 0px 200px 0px 200px;
+    padding: 20px;
+    background: whitesmoke;
+    border: black thick solid;
+    display: none;
+}
+
+.gameplay{
+    margin: 0px 200px 0px 200px;
+    padding: 20px;
+    display: none;
+    background: whitesmoke;
+    border: black thick solid;
+}
+
+.results{
+    margin: 0px 200px 0px 200px;
+    padding: 20px;
+    display: none;
+    background: whitesmoke;
+    border: black thick solid;
+}
+
+.jumbotron{
+    opacity: .7;
+}
+
+#gameover{
+    display: none;
+    width: 200px;
 }

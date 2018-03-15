@@ -15,12 +15,14 @@
     <script src="assets/javascript/app.js"></script>
 </head>
 <body>
-    <div class="display-4">Quick-fire Buckeye Trivia</div>
-    <div class ="h4">How much do you know about The Ohio State University?</div>
-    <div class ="time"></div>
+    <div class="jumbotron">
+        <div class="display-4">Quick-fire Buckeye Trivia</div><br>
+        <div class ="h4">How much do you know about The Ohio State University?</div><br>
+    </div>
+    <div class ="time"></div><br>
     <div class = "gameplay">
         <div class= "allChoices">
-            <div class="question"></div>
+            <div class="question"></div><br>
             <div class="choices">
                 <div id="option0"></div>
             </div>
@@ -35,7 +37,9 @@
             </div>
         </div>
     </div>
-    <div class = "results"></div>
+    <div class = "results">
+        <img id="gameover" src="assets/images/gameover.jpg">
+    </div><br>
     <button type="button" class="btn btn-secondary" id="startBtn">Start!</button>
     <button type="button" class="btn btn-secondary" id="nextBtn">Next Question</button>
     <button type="button" class="btn btn-secondary" id="resetBtn">Play again?</button>
